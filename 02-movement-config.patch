@@ -1,33 +1,32 @@
-diff --git a/movement/make/Makefile b/movement/make/Makefile
-index bf9351e..0007df5 100644
---- a/movement/make/Makefile
-+++ b/movement/make/Makefile
-@@ -2,6 +2,10 @@
- TOP = ../..
- include $(TOP)/make.mk
+diff --git a/Makefile b/Makefile
+index c4a9c20..f8bff88 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,6 +1,10 @@
+ # Keep this first line.
+ GOSSAMER_PATH=gossamer
  
 +ifdef MOVEMENT_CONFIG
 +CFLAGS += -DMOVEMENT_CONFIG='"$(MOVEMENT_CONFIG)"'
 +endif
 +
- # If you add any other subdirectories with header files you wish to include, add them after ../
- # Note that you will need to add a backslash at the end of any line you wish to continue, i.e.
- # INCLUDES += \
-diff --git a/movement/movement.c b/movement/movement.c
-index 0ded11e..aacd09b 100644
---- a/movement/movement.c
-+++ b/movement/movement.c
-@@ -34,8 +34,12 @@
- #include "filesystem.h"
- #include "movement.h"
+ # Which board are we building for? Commented out to force a choice when building.
+ # Options are:
+ # - sensorwatch_pro
+diff --git a/movement.c b/movement.c
+index cafa09f..9758b93 100644
+--- a/movement.c
++++ b/movement.c
+@@ -45,7 +45,11 @@
+ #include "delay.h"
+ #include "thermistor_driver.h"
  
+-#include "movement_config.h"
 +#ifndef MOVEMENT_CONFIG
 +#define MOVEMENT_CONFIG "movement_config.h"
 +#endif
 +
- #ifndef MOVEMENT_FIRMWARE
--#include "movement_config.h"
 +#include MOVEMENT_CONFIG
- #elif MOVEMENT_FIRMWARE == MOVEMENT_FIRMWARE_STANDARD
- #include "alt_fw/standard.h"
- #elif MOVEMENT_FIRMWARE == MOVEMENT_FIRMWARE_ALT_TIME
+ 
+ #include "movement_custom_signal_tunes.h"
+ 

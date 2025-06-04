@@ -40,20 +40,20 @@ RUN apt-get update && \
 #ENV EM_CONFIG /emconfig
 #RUN emcc --generate-config
 
-RUN git clone https://github.com/joeycastillo/Sensor-Watch.git
+RUN git clone https://github.com/joeycastillo/second-movement.git
 
-WORKDIR Sensor-Watch/
+WORKDIR second-movement/
+
+RUN git submodule update --init
 
 COPY *.patch ./
 RUN for f in *.patch; do patch -p1 < "$f"; done
 
-RUN emmake make -C movement/make 'BUILD=build-sim' 'COLOR=RED'
-RUN make -C movement/make 'BUILD=build-RED' COLOR=RED
-RUN make -C movement/make 'BUILD=build-GREEN' COLOR=GREEN
-RUN make -C movement/make 'BUILD=build-BLUE' COLOR=BLUE
-
-COPY *.afterpatch ./
-RUN for f in *.afterpatch; do patch -p1 < "$f"; done
+RUN emmake make 'BUILD=build-sim' BOARD=sensorwatch_red DISPLAY=classic
+RUN make 'BUILD=build-sensorwatch_red' BOARD=sensorwatch_red DISPLAY=classic
+RUN make 'BUILD=build-sensorwatch_green' BOARD=sensorwatch_green DISPLAY=classic
+RUN make 'BUILD=build-sensorwatch_blue' BOARD=sensorwatch_blue DISPLAY=classic
+RUN make 'BUILD=build-sensorwatch_pro' BOARD=sensorwatch_pro DISPLAY=classic
 
 WORKDIR /
 RUN mkdir /builds
@@ -62,10 +62,10 @@ RUN touch /builds/list.html
 RUN chown -R www-data:www-data /builds
 COPY nginx.conf /usr/local/openresty/nginx/conf/
 COPY static static
-#RUN sed -n '/#include/{s/#include "\(.*\).h"/  <option value="\1">\1<\/option>/;p}' Sensor-Watch/movement/movement_faces.h > static/available_faces.html
+#RUN sed -n '/#include/{s/#include "\(.*\).h"/  <option value="\1">\1<\/option>/;p}' Sensor-second-movement/movement_faces.h > static/available_faces.html
 COPY ./generate-faces-html.sh ./
 RUN ./generate-faces-html.sh > static/available_faces.html
-RUN cd /Sensor-Watch && git rev-parse HEAD > /static/commit_hash
+RUN cd /second-movement && git rev-parse HEAD > /static/commit_hash
 COPY templates templates
 COPY code code
-RUN sed -n -e '/#include/{s/#include "\(.*\).h"/  \1 = true,/;p}' -e '1i return {' -e ';$a }' Sensor-Watch/movement/movement_faces.h > code/available_faces.lua
+RUN sed -n -e '/#include/{s/#include "\(.*\).h"/  \1 = true,/;p}' -e '1i return {' -e ';$a }' second-movement/movement_faces.h > code/available_faces.lua

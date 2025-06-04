@@ -161,7 +161,7 @@ local function build(dir, makeargs, defines, faces, secondary_face_index)
     table.insert(argslist, k .. '=' .. v)
   end
 
-  local ok, stdout, stderr, reason, status = shell.run([[PATH=/bin:/usr/bin exec /code/build.sh "]] .. dir .. [[" ]] .. makeargs['COLOR'] .. ' ' .. table.concat(argslist, ' '), nil, 20000)
+  local ok, stdout, stderr, reason, status = shell.run([[PATH=/bin:/usr/bin exec /code/build.sh "]] .. dir .. [[" ]] .. makeargs['BOARD'] .. ' ' .. table.concat(argslist, ' '), nil, 20000)
   if ok == nil then
     error('Internal error trying to start build: ' .. tostring(reason))
   end
