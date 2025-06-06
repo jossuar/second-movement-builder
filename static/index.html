@@ -3,207 +3,207 @@
 
 <head>
 
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Sensor Watch Builder</title>
+    <title>Sensor Watch Builder</title>
 
-<script>
-function dragstart_handler(ev) {
-  ev.dataTransfer.setData("text/plain", ev.target.id)
-  ev.dataTransfer.dropEffect = "copy"
-}
+    <script>
+        function dragstart_handler(ev) {
+          ev.dataTransfer.setData("text/plain", ev.target.id)
+          ev.dataTransfer.dropEffect = "copy"
+        }
 
-function dragover_handler(ev) {
-  ev.preventDefault()
-}
+        function dragover_handler(ev) {
+          ev.preventDefault()
+        }
 
-function drop_handler(ev) {
-  ev.preventDefault()
-  const dropped = event.dataTransfer.getData("text/plain")
-  add_option(ev.target, dropped)
-}
+        function drop_handler(ev) {
+          ev.preventDefault()
+          const dropped = event.dataTransfer.getData("text/plain")
+          add_option(ev.target, dropped)
+        }
 
-function option_handler(ev, el) {
-  ev.preventDefault()
+        function option_handler(ev, el) {
+          ev.preventDefault()
 
-  const secondary_faces_select = document.getElementById("secondary_faces")
-  if (el.parentNode != secondary_faces_select) {
-    el.remove()
-    secondary_faces_select.append(el)
-  } else {
-    el.remove()
-  }
-}
+          const secondary_faces_select = document.getElementById("secondary_faces")
+          if (el.parentNode != secondary_faces_select) {
+            el.remove()
+            secondary_faces_select.append(el)
+          } else {
+            el.remove()
+          }
+        }
 
-function add_option(select_element, text) {
-  const el = document.createElement("option")
-  el.selected = true
-  el.value = text
-  el.append(document.createTextNode(text))
-  el.addEventListener("mousedown", ev => option_handler(ev, el))
-  el.addEventListener("touchstart", ev => option_handler(ev, el))
-  select_element.append(el)
-}
+        function add_option(select_element, text) {
+          const el = document.createElement("option")
+          el.selected = true
+          el.value = text
+          el.append(document.createTextNode(text))
+          el.addEventListener("mousedown", ev => option_handler(ev, el))
+          el.addEventListener("touchstart", ev => option_handler(ev, el))
+          select_element.append(el)
+        }
 
-function new_face_click_handler(ev) {
-  ev.preventDefault()
-  add_option(document.getElementById("faces"), ev.target.id)
-}
+        function new_face_click_handler(ev) {
+          ev.preventDefault()
+          add_option(document.getElementById("faces"), ev.target.id)
+        }
 
-// Force us not to use the backwards cache
-// (to reset spinner and selected items on new build).
-window.addEventListener("unload", () => {})
+        // Force us not to use the backwards cache
+        // (to reset spinner and selected items on new build).
+        window.addEventListener("unload", () => {})
 
-window.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("js-section").hidden = false
-  const available_faces = document.getElementById("available_faces")
+        window.addEventListener("DOMContentLoaded", () => {
+          document.getElementById("js-section").hidden = false
+          const available_faces = document.getElementById("available_faces")
 
-  let category = null;
-  for (const option of document.querySelectorAll("#faces > option")) {
-    if (option.dataset.category != category) {
-      category = option.dataset.category
-      const el = document.createElement("h3")
-      el.innerText = category
-      available_faces.append(el)
-    }
+          let category = null;
+          for (const option of document.querySelectorAll("#faces > option")) {
+            if (option.dataset.category != category) {
+              category = option.dataset.category
+              const el = document.createElement("h3")
+              el.innerText = category
+              available_faces.append(el)
+            }
 
-    const span = document.createElement("span")
-    span.innerText = " "
-    available_faces.append(span);
+            const span = document.createElement("span")
+            span.innerText = " "
+            available_faces.append(span);
 
-    {
-      const el = document.createElement("button")
-      el.id = option.value
-      el.draggable = true
-      el.innerHTML = option.innerHTML
-      el.addEventListener("dragstart", dragstart_handler)
-      el.addEventListener("click", new_face_click_handler)
-      span.append(el)
-    }
-    
-    {
-      const el = document.createElement("a")
-      el.href = option.dataset.url
-      el.innerText = "?"
-      span.append(el)
-    }
-  }
+            {
+              const el = document.createElement("button")
+              el.id = option.value
+              el.draggable = true
+              el.innerHTML = option.innerHTML
+              el.addEventListener("dragstart", dragstart_handler)
+              el.addEventListener("click", new_face_click_handler)
+              span.append(el)
+            }
 
-  for (const option of document.querySelectorAll(".facetarget > option")) {
-    option.remove()
-  }
+            {
+              const el = document.createElement("a")
+              el.href = option.dataset.url
+              el.innerText = "?"
+              span.append(el)
+            }
+          }
 
-  for (const face_target of document.querySelectorAll(".facetarget")) {
-    face_target.addEventListener("drop", drop_handler)
-    face_target.addEventListener("dragover", dragover_handler)
-  }
+          for (const option of document.querySelectorAll(".facetarget > option")) {
+            option.remove()
+          }
 
-  const clear_button = document.getElementById("clear")
-  clear_button.hidden = false
-  clear_button.addEventListener("click", () => {
-    for (const option of document.querySelectorAll(".facetarget > option")) {
-      option.remove()
-    }
-  })
+          for (const face_target of document.querySelectorAll(".facetarget")) {
+            face_target.addEventListener("drop", drop_handler)
+            face_target.addEventListener("dragover", dragover_handler)
+          }
 
-  const build_form = document.getElementById("build-form")
-  const submit_button = document.getElementById("build")
-  const spinner = document.getElementById("spinner")
-  build_form.addEventListener('submit', ev => {
-    submit_button.hidden = true
-    clear_button.hidden = true
-    spinner.hidden = false
-  })
-})
-</script>
+          const clear_button = document.getElementById("clear")
+          clear_button.hidden = false
+          clear_button.addEventListener("click", () => {
+            for (const option of document.querySelectorAll(".facetarget > option")) {
+              option.remove()
+            }
+          })
 
-<style>
-main {
-  display: grid;
-  grid-template-columns: 30% 30% 40%;
-}
+          const build_form = document.getElementById("build-form")
+          const submit_button = document.getElementById("build")
+          const spinner = document.getElementById("spinner")
+          build_form.addEventListener('submit', ev => {
+            submit_button.hidden = true
+            clear_button.hidden = true
+            spinner.hidden = false
+          })
+        })
+    </script>
 
-select {
-  width: 90%;
-  font-size: large;
-}
+    <style>
+        main {
+          display: grid;
+          grid-template-columns: 30% 30% 40%;
+        }
 
-#available_faces button {
-  padding: 3px;
-  margin: 3px;
-  font-size: medium;
-}
+        select {
+          width: 90%;
+          font-size: large;
+        }
 
-#faces {
-  height: 300px;
-}
+        #available_faces button {
+          padding: 3px;
+          margin: 3px;
+          font-size: medium;
+        }
 
-#secondary_faces {
-  height: 200px;
-}
+        #faces {
+          height: 300px;
+        }
 
-.action-buttons {
-  padding: 5px;
-  margin: 10px;
-  font-size: x-large;
-}
+        #secondary_faces {
+          height: 200px;
+        }
 
-@media (max-width: 900px) {
-  main {
-    grid-template-columns: 60% 40%;
-  }
+        .action-buttons {
+          padding: 5px;
+          margin: 10px;
+          font-size: x-large;
+        }
 
-  select {
-    font-size: small;
-  }
+        @media (max-width: 900px) {
+          main {
+            grid-template-columns: 60% 40%;
+          }
 
-  #available_faces > button {
-    font-size: small;
-    max-width: 90px;
-    overflow: hidden;
-  }
+          select {
+            font-size: small;
+          }
 
-  .action-buttons {
-    font-size: large;
-  }
+          #available_faces > button {
+            font-size: small;
+            max-width: 90px;
+            overflow: hidden;
+          }
 
-  #faces {
-    height: 200px;
-  }
+          .action-buttons {
+            font-size: large;
+          }
 
-  #secondary_faces {
-    height: 100px;
-  }
+          #faces {
+            height: 200px;
+          }
 
-}
+          #secondary_faces {
+            height: 100px;
+          }
 
-/* spinner from https://loading.io/css/ */
-.lds-dual-ring {
-  display: inline-block;
-  width: 80px;
-  height: 80px;
-}
-.lds-dual-ring:after {
-  content: " ";
-  display: block;
-  width: 64px;
-  height: 64px;
-  margin: 8px;
-  border-radius: 50%;
-  border: 6px solid #000;
-  border-color: #000 transparent #000 transparent;
-  animation: lds-dual-ring 1.2s linear infinite;
-}
-@keyframes lds-dual-ring {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
+        }
 
-</style>
+        /* spinner from https://loading.io/css/ */
+        .lds-dual-ring {
+          display: inline-block;
+          width: 80px;
+          height: 80px;
+        }
+        .lds-dual-ring:after {
+          content: " ";
+          display: block;
+          width: 64px;
+          height: 64px;
+          margin: 8px;
+          border-radius: 50%;
+          border: 6px solid #000;
+          border-color: #000 transparent #000 transparent;
+          animation: lds-dual-ring 1.2s linear infinite;
+        }
+        @keyframes lds-dual-ring {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+
+    </style>
 
 </head>
 
@@ -211,75 +211,81 @@ select {
 
 
 <section>
-<h1>Sensor Watch Builder</h1>
-
-<p>Build firmware for the <a href="https://sensorwatch.net/">Sensor Watch</a> online. Currently building
-from <a href="https://github.com/joeycastillo/second-movement/tree/<!--# include file="commit_hash" -->">this commit</a>.
-Experimental and unofficial. <a href="https://github.com/wryun/sensor-watch-builder/">Source code on GitHub</a>.
+    <h1>Sensor Watch Builder</h1>
+    <p>
+        Build firmware for the <a href="https://sensorwatch.net/">Sensor Watch</a> online. Currently building
+        from <a href="https://github.com/joeycastillo/second-movement/tree/<!--# include file=" commit_hash" -->>this
+        commit</a>.
+        Experimental and unofficial. <a href="https://github.com/wryun/sensor-watch-builder/">Source code on GitHub</a>.
+    </p>
 </section>
 
 <main>
-<section id="js-section" hidden>
-<h3>Drag or click on faces...</h3>
-<div name="available_faces" id="available_faces" multiple required>
-</div>
-</section>
+    <section id="js-section" hidden>
+        <h3>Drag or click on faces...</h3>
+        <div name="available_faces" id="available_faces" multiple required>
+        </div>
+    </section>
 
-<section>
+    <section>
 
-<form id="build-form" action="/build" method="post">
+        <form id="build-form" action="/build" method="post">
 
-<h3>Config</h3>
+            <h3>Config</h3>
 
-<h5><label for="board-color">Board colour</label></h3>
-<select name="makearg-BOARD" id="board-color" required>
-    <option value="sensorwatch_red">Red</option>
-    <option value="sensorwatch_green">Green</option>
-    <option value="sensorwatch_blue">Blue</option>
-    <option value="sensorwatch_pro">Pro</option>
-</select>
+            <h5><label for="board-color">Board colour</label></h5>
+            <select name="makearg-BOARD" id="board-color" required>
+                <option value="sensorwatch_red">Red</option>
+                <option value="sensorwatch_green">Green</option>
+                <option value="sensorwatch_blue">Blue</option>
+                <option value="sensorwatch_pro">Pro</option>
+            </select>
 
-<h5><label for="display-type">Display type</label></h3>
-<select name="makearg-DISPLAY" id="display-type" required>
-    <option value="classic">Classic</option>
-    <option value="custom">Custom</option>
-</select>
+            <h5><label for="display-type">Display type</label></h5>
+            <select name="makearg-DISPLAY" id="display-type" required>
+                <option value="classic">Classic</option>
+                <option value="custom">Custom</option>
+            </select>
 
-<h5><label for="signal-tune">Signal tune (hourly)</label></h3>
-<select name="defgroup-SIGNAL" id="signal-tune" required>
-    <option value="SIGNAL_TUNE_DEFAULT">Default</option>
-    <option value="SIGNAL_TUNE_ZELDA_SECRET">Zelda Secret Sound</option>
-    <option value="SIGNAL_TUNE_MARIO_THEME">Mario</option>
-    <option value="SIGNAL_TUNE_KIM_POSSIBLE">Kim Possible</option>
-</select>
+            <h5><label for="signal-tune">Signal tune (hourly)</label></h5>
+            <select name="defgroup-SIGNAL" id="signal-tune" required>
+                <option value="SIGNAL_TUNE_DEFAULT">Default</option>
+                <option value="SIGNAL_TUNE_ZELDA_SECRET">Zelda Secret Sound</option>
+                <option value="SIGNAL_TUNE_MARIO_THEME">Mario</option>
+                <option value="SIGNAL_TUNE_KIM_POSSIBLE">Kim Possible</option>
+            </select>
 
-<h5><label for="faces">Faces</label></h5>
-<p>
-<select class="facetarget" name="faces" id="faces" multiple required>
-    <!--# include file="available_faces.html" -->
-</select>
+            <h5><label for="faces">Faces</label></h5>
+            <p>
+                <select class="facetarget" name="faces" id="faces" multiple required>
+                    <!--# include file="available_faces.html" -->
+                </select>
+            </p>
 
-<h5><label for="secondary_faces">Secondary Faces</label></h5>
-<p>
-<select class="facetarget" name="secondary_faces" id="secondary_faces" multiple>
-    <!--# include file="available_faces.html" -->
-</select>
+            <h5><label for="secondary_faces">Secondary Faces</label></h5>
+            <p>
+                <select class="facetarget" name="secondary_faces" id="secondary_faces" multiple>
+                    <!--# include file="available_faces.html" -->
+                </select>
+            </p>
 
-<p>
-<button class="action-buttons" id="clear" hidden>Clear</button>
-<input class="action-buttons" type="submit" id="build" value="Build a watch!">
-<div id="spinner" hidden><div class="lds-dual-ring"></div></div>
+            <p>
+                <button class="action-buttons" id="clear" hidden>Clear</button>
+                <input class="action-buttons" type="submit" id="build" value="Build a watch!">
+            <div id="spinner" hidden>
+                <div class="lds-dual-ring"></div>
+            </div>
+            </p>
 
-</form>
-</section>
+        </form>
+    </section>
 
-<section>
-
-<h2>Previous builds</h2>
-<ul>
-    <!--# include file="/builds/list.html" -->
-</ul>
-</section>
+    <section>
+        <h2>Previous builds</h2>
+        <ul>
+            <!--# include file="/builds/list.html" -->
+        </ul>
+    </section>
 
 
 </main>
