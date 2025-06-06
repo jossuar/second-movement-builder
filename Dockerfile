@@ -1,4 +1,4 @@
-FROM openresty/openresty:bookworm
+FROM openresty/openresty:bookworm AS builder
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -6,39 +6,14 @@ ENV DEBIAN_FRONTEND noninteractive
 # but the fly.io registry kept dying on big layer transfers...
 # Possibly should just do a two stage build.
 
-RUN apt-get update && \
-  apt-get install -y --no-install-recommends git make patch && \
-  rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && \
-  apt-get install -y --no-install-recommends gcc-arm-none-eabi && \
-  rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && \
-  apt-get install -y --no-install-recommends libnewlib-arm-none-eabi && \
-  rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && \
-  apt-get install -y --no-install-recommends clang && \
-  rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && \
-  apt-get install -y --no-install-recommends llvm lld & \
-  rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && \
-  apt-get install -y --no-install-recommends nodejs && \
-  rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && \
-  apt-get install -y --no-install-recommends emscripten && \
-  rm -rf /var/lib/apt/lists/*
-
-# Bookworm seems to setup a decent FROZEN_CACHE which means
-# this is no longer necessary for decent perf.
-#ENV EM_CACHE /emcache
-#ENV EM_CONFIG /emconfig
-#RUN emcc --generate-config
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends git make patch
+RUN apt-get install -y --no-install-recommends gcc-arm-none-eabi
+RUN apt-get install -y --no-install-recommends libnewlib-arm-none-eabi
+RUN apt-get install -y --no-install-recommends clang
+RUN apt-get install -y --no-install-recommends llvm lld
+RUN apt-get install -y --no-install-recommends nodejs
+RUN apt-get install -y --no-install-recommends emscripten
 
 RUN git clone https://github.com/joeycastillo/second-movement.git
 

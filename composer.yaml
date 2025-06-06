@@ -1,0 +1,8 @@
+services:
+  builder:
+    container_name: builder
+    build:
+      target: builder
+    ports:
+      - "4444:8080"
+    restart: unless-stopped
