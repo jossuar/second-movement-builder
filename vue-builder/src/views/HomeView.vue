@@ -1,46 +1,58 @@
 <template>
-  <div class="row">
-    <div class="col-3">
-      <h3>Draggable 1</h3>
-      <draggable :list="list1" tag="div">
-        <template #item="{ element }">
-          <div>{{ element }}</div>
-        </template>
-      </draggable>
-    </div>
+  <div class="">
+    <draggable
+      :list="list1"
+      tag="div"
+      itemKey="id"
+      class="flex flex-wrap flex-row container mx-auto px-4 overflow-auto"
+    >
+      <template #item="{ element }">
+        <div class="border flex-1 basis-72 w-1/5">{{ element }}</div>
+      </template>
+    </draggable>
+  </div>
 
-    <div class="col-3">
+  <!-- <div class="flex">
       <h3>Draggable 2</h3>
       <draggable class="list-group" :list="list2" group="people" itemKey="id">
         <template #item="{ element, index }">
           <div class="list-group-item">{{ element.name }} {{ index }}</div>
         </template>
       </draggable>
-    </div>
+    </div> -->
 
-    <br />
-    <br />
-    <br />
-    {{ list1 }}
-    <br />
-    {{ list2 }}
-  </div>
+  {{ list1 }}
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import draggable from 'vuedraggable'
+import axios from 'axios'
 
-const list1 = ref([
-  { name: 'John', id: 1 },
-  { name: 'Joao', id: 2 },
-  { name: 'Jean', id: 3 },
-  { name: 'Gerard', id: 4 },
-])
+const list1 = ref([])
 
-const list2 = ref([
-  { name: 'Juan', id: 5 },
-  { name: 'Edgard', id: 6 },
-  { name: 'Johnson', id: 7 },
-])
+// read json
+const a = axios.get('faces.json').then(
+  (value) => {
+    console.log(value)
+
+    type FaceInfo = (typeof value.data)[0]
+
+    list1.value = value.data.map((v: FaceInfo) => v.category)
+
+    const a: FaceInfo = null
+  },
+  (reason) => console.log(reason),
+)
+
+console.log(a)
+
+// build datastructure
+
+// const list1 = ref([
+//   { name: 'JohnJohnJohnJohn', id: 1 },
+//   { name: 'Joao', id: 2 },
+//   { name: 'JeanJeanJeanJeanJeanJeanJean', id: 3 },
+//   { name: 'GerardGerardGerard', id: 4 },
+// ])
 </script>

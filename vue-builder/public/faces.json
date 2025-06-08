@@ -1,0 +1,126 @@
+[
+  {
+    "category": "clock",
+    "faces": [
+      {
+        "face": "beats",
+        "doc": "BEATS TIME face\nThe Beat Time face displays the current Swatch Internet Time, or .beat time.\nThis is a decimal time system that divides the day into 1000 beats.\nThe three large digits in the bottom row indicate the current beat, and the\ntwo smaller digits (normally the seconds in Simple Clock) indicate the\nfractional beat; so for example you can read “67214” as “beat 672.14”."
+      },
+      {
+        "face": "clock",
+        "doc": "CLOCK FACE\nDisplays the current local time, just like the original watch.\nThis is the default display mode in most watch configurations.\nLong-press ALARM to toggle the hourly chime."
+      },
+      {
+        "face": "mars_time",
+        "doc": "MARS TIME face\nThis watch face is dedicated to Martian timekeeping.\nIt has several modes, and can display either a time or a date.\nPressing the ALARM button cycles through different time zones on Mars:\n  MC - Mars Coordinated Time, the time at Airy-0 Crater on the Martian prime meridian\n  ZH - Local mean solar time for the Zhurong rover\n  PE - LMST for the Perseverance rover\n  IN - LMST for the Insight lander\n  CU - LMST for the Curiosity rover\nPress the LIGHT button to toggle between displaying time and date:\n  MC S - the Mars Sol Date, Martian days since December 29, 1873\n  ZH Sol - Mission sol for the Zhurong rover\n  PE Sol - Mission sol for the Perseverance rover\n  IN S - Mission sol for the InSight lander\n  CU S - Mission sol for the Curiosity rover\nNote that where the mission sol is below 1000, this watch face displays\nthe word “Sol” on the bottom line. When the mission sol is over 1000, the\nword “Sol” will not fit and so it displays a stylized letter S at the top\nright."
+      },
+      {
+        "face": "world_clock",
+        "doc": "WORLD CLOCK FACE\nThe World Clock watch face looks similar to the Simple Clock watch face,\nbut you’ll notice that at first launch the day of week indicators are blank.\nThat’s because this watch face does not display the day of the week.\nInstead, you may customize these letters to display the name of a time zone\nof your choosing.\nTo customize this watch face, press and hold the ALARM button. The first\nletter in the top row will begin flashing. Press the ALARM button repeatedly\nto advance through the available letters in the first slot, then press the\nLIGHT button to move to the second letter. Finally, press LIGHT again to move\nto the time zone setting, and press ALARM to cycle through the available time\nzones. Press LIGHT one last time to return to the world clock display.\nNote that the second slot cannot display all letters or numbers. Also note\nthat at this time, time zones do not automatically update for daylight saving\ntime; you will need to manually adjust this field each spring and fall."
+      }
+    ]
+  },
+  {
+    "category": "complication",
+    "faces": [
+      {
+        "face": "advanced_alarm",
+        "doc": "Advanced Alarm face\nImplements up to 16 alarm slots on the sensor watch\nUsage:\n   - In normal mode, the alarm button cycles through all 16 alarms. \n   - Pressing the alarm button long in normal mode toggles the corresponding alarm on or off.\n     (Whereas pressing the alarm button extra long brings you back to alarm no. 1.)\n   - Pressing the light button enters setting mode and cycles through the settings of each alarm.\n     (Long pressing the light button enters setting mode without illuminating the led.)\n   - In setting mode an alarm slot is selected by pressing the alarm button when the slot number \n     in the upper right corner is blinking.\n   - For each alarm slot, you can select the day. These are the day modes:\n       - ED = the alarm rings every day\n       - 1t = the alarm fires only one time and is erased afterwards\n       - MF = the alarm fires Mondays to Fridays\n       - WN = the alarm fires on weekends (Sa/Su)\n       - MO to SU = the alarm fires only on the given day of week\n   - You can fast cycle through hour or minute setting via long press of the alarm button.\n   - You can select the tone in which the alarm is played. (Three pitch levels available.)\n   - You can select how many \"beep rounds\" are played for each alarm. 1 to 9 rounds, plus extra \n     long ('L') and extra short ('o') alarms.\n   - The simple watch face indicates if any alarm is set within the next 24h by showing the signal\n     indicator."
+      },
+      {
+        "face": "alarm",
+        "doc": "define\nDaily ALARM face (formerly WAKE Face)\nBasic daily alarm clock face. Seems useful if nothing else in the interest\nof feature parity with the F-91W’s OEM module, 593.\nAlso experiments with caret-free UI: One button cycles hours, the other\nminutes, so there’s no toggling between display and adjust modes and no\ncycling the caret through the UI.\n  º LIGHT advances hour by 1\n  º LIGHT long press advances hour by 6\n  º ALARM advances minute by 10\n  º ALARM long press cycles through signal modes (just one at the moment)"
+      },
+      {
+        "face": "countdown",
+        "doc": "COUNTDOWN TIMER face\nSlight extension of the original countdown face by Wesley Ellis.\n  - Press the light button to enter setting mode and adjust the\n    countdown timer.\n  - Start and pause the countdown using the alarm button, similar\n    to the stopwatch face.\n  - When paused or terminated, press the light button to restore the\n    last entered countdown.\nMax countdown is 23 hours, 59 minutes and 59 seconds.\nNote: we have to prevent the watch from going to deep sleep using\nmovement_schedule_background_task() while the timer is running."
+      },
+      {
+        "face": "days_since",
+        "doc": "*define\nDAYS SINCE face (previously Day One)\nThis watch face displays the number of days since or until a given date.\nIt was originally designed to display the number of days you’ve been alive,\nbut technically it can count up from any date in the 20th century or the\n21st century, so far.\nLong press on the Alarm button to enter customization mode. The text “YR”\nwill appear, and will allow you to set the year starting from 1959. Press\nAlarm repeatedly to advance the year. If your birthday is before 1959,\nadvance beyond the current year and it will wrap around to 1900.\nOnce you have set the year, press Light to set the month (“MO”) and\nday (“DA”), advancing the value by pressing Alarm repeatedly.\nNote that at this time, the Day One face does not display the sleep\nindicator in sleep mode, which may make the watch appear to be\nunresponsive in sleep mode. You can still press the Alarm button to\nwake the watch. This UI quirk will be addressed in a future update."
+      },
+      {
+        "face": "fast_stopwatch",
+        "doc": "STOCK STOPWATCH face\nThe Stock Stopwatch face implements the original F-91W stopwatch\nfunctionality, including counting hundredths of seconds and lap timing.\nUse the ALARM button to start and stop the stopwatch.\nPress the LIGHT button while the stopwatch is running to view the lap time.\n (The stopwatch continues running in the background, indicated by a blinking colon.)\nPress the LIGHT button again to switch back to the running stopwatch.\nPress the LIGHT button when the timekeeping is stopped to reset the stopwatch.\nThere are two improvements compared to the original F-91W:\n o When the stopwatch reaches 59:59, the counter does not simply jump back\n   to zero but keeps track of hours in the upper right-hand corner\n   (up to 24 hours).\n o Long-press the light button to toggle the LED behavior.\n   It either turns on with each button press or remains off.\nNOTE:\nThis watch face relies heavily on static vars in fast_stopwatch.c.\nThe disadvantage is that you cannot use more than one instance of this\nwatch face on your custom firmware - but then again, who would want that?\nThe advantage is that accessing vars is more direct and faster, and we\ncan save some precious cpu cycles.  :-)"
+      },
+      {
+        "face": "moon_phase",
+        "doc": "MOON PHASE face\nThe Moon Phase face is similar to the Sunrise/Sunset face: it displays the\ncurrent phase of the moon, along with the day of the month and a graphical\nrepresentation of the moon on the top row.\nThis graphical representation is a bit abstract. The segments that turn on\nrepresent the shape of the moon, waxing from the bottom right and waning at\nthe top left. A small crescent at the bottom right will grow into a larger\ncrescent, then add lines in the center for a quarter and half moon. All\nsegments are on during a full moon. Then gradually the segments at the\nbottom right will turn off, until all that remains is a small waning\ncrescent at the top left.\nAll segments turn off during a new moon.\nOn this screen you may press the Alarm button repeatedly to move forward\nin time: the day of the month at the top right will advance by one day for\neach button press, and both the text and the graphical representation will\ndisplay the moon phase for that day. Try pressing the Alarm button 27 times\nnow, just to visualize what the moon will look like over the next month."
+      },
+      {
+        "face": "stopwatch",
+        "doc": "STOPWATCH FACE\nThe Stopwatch face provides basic stopwatch functionality: you can start\nand stop the stopwatch with the alarm button. Pressing the light button\nwhen the timer is stopped resets it.\nThis face does not count sub-seconds.\nSee also: \"fast_stopwatch_face.h\""
+      },
+      {
+        "face": "sunrise_sunset",
+        "doc": "SUNRISE & SUNSET FACE\nThe Sunrise/Sunset face is designed to display the next sunrise or sunset\nfor a given location. It also functions as an interface for setting the\nlocation register, which other watch faces can use for various purposes.\nRefer to the wiki for usage instructions:\n https://www.sensorwatch.net/docs/watchfaces/complication/#sunrisesunset"
+      }
+    ]
+  },
+  {
+    "category": "demo",
+    "faces": [
+      {
+        "face": "all_segments",
+        "doc": "define\nALL SEGMENTS FACE\nThis watch face energizes all segments on the screen at once."
+      },
+      {
+        "face": "character_set",
+        "doc": "CHARACTER SET FACE\nThis watch face displays all of the characters in the Sensor Watch character\nset. You can advance from one character to the next with a short press of the\nALARM button.\nThis watch face may be useful to watch face developers, in that it can help\nthem to understand which characters will work in different positions."
+      },
+      { "face": "light_sensor", "doc": "" },
+      {
+        "face": "peek_memory",
+        "doc": "*define\nPEEK FACE\nThis watch face displays a location in memory in a given format.\nCurrently hard coded but would be cool to let user select it somehow.\nOnly works with custom LCD. This is for debugging purposes only."
+      }
+    ]
+  },
+  {
+    "category": "io",
+    "faces": [
+      {
+        "face": "chirpy_demo",
+        "doc": "CHIRPY DEMO FACE\nThis face demonstrates the chirpy-tx library. It is intended to help you"
+      },
+      { "face": "irda_upload", "doc": "" }
+    ]
+  },
+  {
+    "category": "sensor",
+    "faces": [
+      {
+        "face": "accelerometer_status",
+        "doc": "*define\nAccelerometer Interrupt Counter\nThis is an experimental watch face for counting the number of interrupts that\nthe Sensor Watch Motion acceleromoeter board fires. I expect it will be removed\nonce we integrate accelerometer functionality more deeply into Movement."
+      },
+      { "face": "activity_logging", "doc": "" },
+      { "face": "light_meter", "doc": "" },
+      { "face": "temperature_display", "doc": "" },
+      { "face": "temperature_logging", "doc": "" },
+      {
+        "face": "voltage",
+        "doc": "VOLTAGE face\nThis watch face is very simple and has no controls to speak of. It displays\nthe battery voltage as measured by the SAM L22’s ADC."
+      }
+    ]
+  },
+  {
+    "category": "settings",
+    "faces": [
+      {
+        "face": "finetune",
+        "doc": "FINETUNE face\nFineTune face allows to align watch with sub-second precision in 25/250ms\naccuracy. Counts time since previous finetune, and allows to calculate &\napply ppm correction for nanosec.\nBest used in conjunction with the NANOSEC face.\nMain screen - adjust delay (light/alarm)\nLong MODE press - show hours since previous finetune\nLong MODE press - show calculated ppm correction.\n You can apply it with long LIGHT, or just reset finetune timer with long ALARM.\nFinetune will apply crystal aging correction on every finetune save\n(as aging is calculated since \"last finetune\" timestamp); but you should\nworry about aging only on second/third years of watch calibration (if you\nare really looking at less than 10 seconds per year of error).\nWarning, do not use at the first second of a month, as you might stay at\nthe same month and it will surprise you. Just wait 1 second...We are not\nfully replicating RTC timer behavior when RTC is off.\nSimulating months and years is... too much complexity.\nFor full usage instructions, please refer to the wiki:\n https://www.sensorwatch.net/docs/watchfaces/nanosec/"
+      },
+      {
+        "face": "nanosec",
+        "doc": "NANOSEC face\nThe goal of nanosec face is dramatic improvement of SensorWatch accuracy.\nMinimum goal is <60 seconds of error per year. Full success is if we can\nreach <15 seconds per year (<0.47ppm error).\nBest used in conjunction with the FINETUNE face.\nIt implements temperature correction using tempco from datasheet (and\nallows to adjust these) and allows to introduce offset fix. Therefore\nrequires temperature sensor board.\nMost users will need to apply profile 3 (\"default\") or 2 (\"conservative\ndatasheet\"), and tune first parameter \"static offset\" (as it's different\nfor every crystal sample).\nFrequency correction is dithered over 31 correction intervals (31x10\nminutes or ~5 hours), to allow <0.1ppm correction resolution.\n * 1ppm is 0.0864 sec per day.\n * 0.1ppm is 0.00864 sec per day.\nTo stay under 1ppm error you would need calibration of your specific\ninstance of quartz crystal after some \"burn-in\" (ideally 1 year).\nShould improve TOTP experience.\nDefault funing fork tempco: -0.034 ppm/°C², centered around 25°C\nWe add optional cubic coefficient, which was measured in practice on my sample.\nCadence (CD) - how many minutes between corrections. Default 10 minutes.\nEvery minute might be too much. Every hour - slightly less power\nconsumption but also less precision.\nCan compensate crystal aging (ppm/year) - but you really should be worrying\nabout it on second/third years of watch calibration.\nFor full usage instructions, please refer to the wiki:\n https://www.sensorwatch.net/docs/watchfaces/nanosec/"
+      },
+      {
+        "face": "set_time",
+        "doc": "SET TIME face\nThe default method for adjusting Sensor Watch time.\nThe Time Set watch face allows you to set the time on Sensor Watch. Use\nthe LIGHT button to advance through the field you are setting, and the\nALARM button to change the value in that field. The fields are, in order:\nHour, Minute, Second, Year, Month, Day and Time Zone.\nFor features like World Clock and Sunrise/Sunset to work correctly, you\nmust set the time to your local time, and the time zone to your local time\nzone. This allows Sensor Watch to correctly offset the time. This also\nmeans that when daylight savings time starts or ends, you must update\nboth the time and the time zone on this screen."
+      },
+      {
+        "face": "settings",
+        "doc": "SETTINGS face (replaces old Preferences watch face)\nThe Settings watch face allows you to configure various options on your\nSensor Watch. Like all other screens, you advance the field you’re setting\nwith the Light button, and advance its value with the Alarm button. The\nSettings watch face labels each setting with a two-letter code up top\nwhen using the classic LCD, or something more readable on the custom LCD.\nThe following list describes each setting and their options:\n CL / Clock - Clock mode.\n     This setting allows you to select a 12-or 24-hour clock display. All\n     watch faces that support displaying the time will respect this setting;\n     for example, both Simple Clock, World Clock and Sunrise/Sunset will\n     display the time in 24 hour format if the 24 hour clock is selected here.\n BT / BTN - Button beep.\n     This setting allows you to choose whether the Mode button should emit\n     a beep when pressed, and if so, how loud it should be. Options are\n     \"Y\" for yes and \"N\" for no.\n TO / Tmout - Timeout.\n     Sets the time until screens that time out (like Settings and Time Set)\n     snap back to the first screen. 60 seconds is a good default for the\n     stock firmware, but if you choose a custom firmware with faces that\n     you’d like to keep on screen for longer, you can set that here.\n LE / LoEne - Low Energy mode.\n     Sets the time until the watch enters its low energy sleep mode.\n     Options range from 1 hour to 7 days, or Never. The more often Sensor\n     Watch goes to sleep, the longer its battery will last — but you will\n     lose the seconds indicator while it is asleep. This setting allows\n     you to make a tradeoff between the device’s responsiveness and its\n     longevity.\n LT / LED - Light Duration and Color\n     The first LED screen lets you choose how long the LED should stay lit\n      when the LIGHT button is pressed. Options are 1 second, 3 seconds\n      and 5 seconds, or “No LED” to disable the LED entirely.\n     The remaining screens set the intensity of the red, green or blue LEDs\n      depending on the target Sensor Board hardware to allow a custom color\n      blend. Values range from 0 (off) to 15 (full intensity).\n     On the LED color screens, the LED remains on so that you can see the\n     effect of mixing the LED colors."
+      }
+    ]
+  }
+]
