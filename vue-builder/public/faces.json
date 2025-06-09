@@ -80,7 +80,7 @@
     "faces": [
       {
         "face": "chirpy_demo",
-        "doc": "CHIRPY DEMO FACE\nThis face demonstrates the chirpy-tx library. It is intended to help you"
+        "doc": "CHIRPY DEMO FACE\nThis face demonstrates the chirpy-tx library. It is intended to help you\ninclude chirpy-tx in your own watch faces that need to transmit data out\nof the watch.\nThe face's first screen lets you select from a few built-in transmissions:\nSCALE cycles through frequencies in fixed increments. This is intended to\ncollect and analyze audio samples from different watches. With this info\nit may be possible to improve chirpy-tx's parameters like the frequencies\nit uses to make the method more robust.\nSHORT is a small transmission that contains data taked from the activity_face.\nLONG is a longer transmission that contains the first two strophes of a\nfamous sea shanty.\nSelect the transmission you want with ALARM, the press LONG ALARM to chirp.\nTo record and decode a chirpy transmission on your computer, you can use the web app here:\nhttps://jealousmarkup.xyz/off/chirpy/rx/"
       },
       { "face": "irda_upload", "doc": "" }
     ]
@@ -98,7 +98,7 @@
       { "face": "temperature_logging", "doc": "" },
       {
         "face": "voltage",
-        "doc": "VOLTAGE face\nThis watch face is very simple and has no controls to speak of. It displays\nthe battery voltage as measured by the SAM L22’s ADC."
+        "doc": "VOLTAGE face\nThis watch face is very simple and has no controls to speak of. It displays\nthe battery voltage as measured by the SAM L22’s ADC.\nNote that the Simple Clock watch face includes a low battery warning, so you\ndon’t technically need to this watch face unless you want to track the\nbattery level."
       }
     ]
   },
