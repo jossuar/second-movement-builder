@@ -1,41 +1,38 @@
 <template>
-  <div class="" v-for="x in list1" :key="x.category">
+  <div class="" v-for="cat in allFaces" :key="cat.category">
     <br />
-    <h1>{{ x.category }}</h1>
+    <h1 class="text-3xl font-bold capitalize">{{ cat.category }}</h1>
     <draggable
-      :list="x.faces"
+      :list="cat.faces"
       tag="div"
-      itemKey="id"
-      class="container mx-auto flex flex-row flex-wrap overflow-auto px-4"
+      :group="{ name: 'faces', put: false }"
+      itemKey="x.category"
+      class="flex flex-row flex-wrap overflow-auto px-4"
     >
       <template #item="{ element }">
-        <div class="w-1/5 flex-1 basis-72 border" :tooltip="element.doc">
-          {{ element.face }}
+        <div class="p-1" :tooltip="element.doc">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger
+                ><Badge>{{ element.face }}</Badge></TooltipTrigger
+              >
+              <TooltipContent>
+                <pre>{{ element.doc }}</pre>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </template>
     </draggable>
   </div>
-
-  <!-- <div class="flex">
-      <h3>Draggable 2</h3>
-      <draggable class="list-group" :list="list2" group="people" itemKey="id">
-        <template #item="{ element, index }">
-          <div class="list-group-item">{{ element.name }} {{ index }}</div>
-        </template>
-      </draggable>
-    </div> -->
-
-  <br />
-  <br />
-  -------------------------------
-  <br />
-  {{ list1 }}
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import draggable from 'vuedraggable'
 import axios from 'axios'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { Badge } from '@/components/ui/badge'
 
 interface FaceInfo {
   face: string
@@ -46,14 +43,16 @@ interface FaceCategory {
   faces: FaceInfo[]
 }
 
-const list1 = ref([])
+const allFacesInit: FaceCategory[] = []
+
+const allFaces = ref(allFacesInit)
 
 // read json
 const a = axios.get('faces.json').then(
   (value) => {
     console.log(value)
 
-    list1.value = value.data
+    allFaces.value = value.data
     //.map((v: Facecategory) => v.category)
   },
   (reason) => console.log(reason),
