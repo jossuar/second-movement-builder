@@ -1,13 +1,17 @@
 <template>
-  <div class="">
+  <div class="" v-for="x in list1" :key="x.category">
+    <br />
+    <h1>{{ x.category }}</h1>
     <draggable
-      :list="list1"
+      :list="x.faces"
       tag="div"
       itemKey="id"
-      class="flex flex-wrap flex-row container mx-auto px-4 overflow-auto"
+      class="container mx-auto flex flex-row flex-wrap overflow-auto px-4"
     >
       <template #item="{ element }">
-        <div class="border flex-1 basis-72 w-1/5">{{ element }}</div>
+        <div class="w-1/5 flex-1 basis-72 border" :tooltip="element.doc">
+          {{ element.face }}
+        </div>
       </template>
     </draggable>
   </div>
@@ -21,6 +25,10 @@
       </draggable>
     </div> -->
 
+  <br />
+  <br />
+  -------------------------------
+  <br />
   {{ list1 }}
 </template>
 
@@ -29,6 +37,15 @@ import { ref } from 'vue'
 import draggable from 'vuedraggable'
 import axios from 'axios'
 
+interface FaceInfo {
+  face: string
+  doc: string
+}
+interface FaceCategory {
+  category: string
+  faces: FaceInfo[]
+}
+
 const list1 = ref([])
 
 // read json
@@ -36,11 +53,8 @@ const a = axios.get('faces.json').then(
   (value) => {
     console.log(value)
 
-    type FaceInfo = (typeof value.data)[0]
-
-    list1.value = value.data.map((v: FaceInfo) => v.category)
-
-    const a: FaceInfo = null
+    list1.value = value.data
+    //.map((v: Facecategory) => v.category)
   },
   (reason) => console.log(reason),
 )
