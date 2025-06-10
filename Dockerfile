@@ -1,6 +1,17 @@
+FROM node:18-alpine AS vue-builder
+WORKDIR /app
+ARG mode
+ARG BRANCH
+
+RUN apk add --no-cache git
+RUN git clone --depth 1 --single-branch https://github.com/jossuar/second-movement-builder
+RUN cd /app/second-movement-builder/vue-builder && \
+    npm install && \
+    npm run build
+
 FROM openresty/openresty:bookworm AS builder
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 # These should all be one big install,
 # but the fly.io registry kept dying on big layer transfers...
@@ -14,10 +25,11 @@ RUN apt-get install -y --no-install-recommends clang
 RUN apt-get install -y --no-install-recommends llvm lld
 RUN apt-get install -y --no-install-recommends nodejs
 RUN apt-get install -y --no-install-recommends emscripten
+RUN apt-get install -y --no-install-recommends vim net-tools  # TO be removed
 
 RUN git clone https://github.com/joeycastillo/second-movement.git
 
-WORKDIR second-movement/
+WORKDIR /second-movement/
 
 RUN git submodule update --init
 
@@ -47,4 +59,7 @@ RUN ./generate-faces-html.sh > static/available_faces.html
 RUN cd /second-movement && git rev-parse HEAD > /static/commit_hash
 COPY templates templates
 COPY code code
+
+COPY --from=vue-builder /app/second-movement-builder/vue-builder/dist /static
+
 RUN sed -n -e '/#include/{s/#include "\(.*\).h"/  \1 = true,/;p}' -e '1i return {' -e ';$a }' second-movement/movement_faces.h > code/available_faces.lua
