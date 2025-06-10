@@ -15,7 +15,7 @@
           class="flex flex-row flex-wrap overflow-auto px-4"
         >
           <template #item="{ element }">
-            <div class="p-1" :tooltip="element.doc">
+            <div class="p-1">
               <TooltipProvider :disableHoverableContent="true">
                 <Tooltip>
                   <TooltipTrigger as="div"
@@ -37,7 +37,7 @@
         <FormField v-slot="{ componentField }" name="boardColor">
           <FormItem>
             <FormLabel>Board Color</FormLabel>
-            <Select v-bind="componentField" defaultValue="sensorwatch_red">
+            <Select v-bind="componentField">
               <FormControl>
                 <SelectTrigger>
                   <SelectValue placeholder="Select the Board" />
@@ -57,7 +57,7 @@
         <FormField v-slot="{ componentField }" name="displayType">
           <FormItem>
             <FormLabel>Display</FormLabel>
-            <Select v-bind="componentField" defaultValue="classic">
+            <Select v-bind="componentField">
               <FormControl>
                 <SelectTrigger>
                   <SelectValue placeholder="Select the Display" />
@@ -75,7 +75,7 @@
         <FormField v-slot="{ componentField }" name="signalTune">
           <FormItem>
             <FormLabel>Signal Tune (hourly)</FormLabel>
-            <Select v-bind="componentField" defaultValue="SIGNAL_TUNE_DEFAULT">
+            <Select v-bind="componentField">
               <FormControl>
                 <SelectTrigger>
                   <SelectValue placeholder="Select the Signal Tune" />
@@ -186,7 +186,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { h, ref } from 'vue'
 import draggable from 'vuedraggable'
 import axios from 'axios'
 
@@ -209,15 +209,21 @@ import { toast } from 'vue-sonner'
 
 const formSchema = toTypedSchema(
   z.object({
-    boardColor: z.string({
-      required_error: 'Please select your board color.',
-    }),
-    displayType: z.string({
-      required_error: 'Please select your display type.',
-    }),
-    signalTune: z.string({
-      required_error: 'Please select the desired signal tune.',
-    }),
+    boardColor: z
+      .string({
+        required_error: 'Please select your board color.',
+      })
+      .default('sensorwatch_red'),
+    displayType: z
+      .string({
+        required_error: 'Please select your display type.',
+      })
+      .default('classic'),
+    signalTune: z
+      .string({
+        required_error: 'Please select the desired signal tune.',
+      })
+      .default('SIGNAL_TUNE_DEFAULT'),
   }),
 )
 
@@ -226,8 +232,24 @@ const { handleSubmit } = useForm({
 })
 
 const onSubmit = handleSubmit((values) => {
-  toast('Event has been created', {
-    description: 'Sunday, December 03, 2023 at 9:00 AM',
+  toast('Data have been submitted', {
+    description: h(
+      'div',
+      'values=' +
+        JSON.stringify(values, null, '  ') +
+        '\n Primary Faces: ' +
+        JSON.stringify(
+          primaryFaces.value.map((e) => e.face),
+          null,
+          '  ',
+        ) +
+        '\n Secondary Faces: ' +
+        JSON.stringify(
+          secondaryFaces.value.map((e) => e.face),
+          null,
+          '  ',
+        ),
+    ), //'Sunday, December 03, 2023 at 9:00 AM',
     action: {
       label: 'Undo',
       onClick: () => {
@@ -266,5 +288,6 @@ const a = axios.get('faces.json').then(
 
 console.log(a)
 
+//form
 // build datastructure
 </script>

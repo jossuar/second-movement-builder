@@ -29,7 +29,7 @@
       },
       {
         "face": "alarm",
-        "doc": "define\nDaily ALARM face (formerly WAKE Face)\nBasic daily alarm clock face. Seems useful if nothing else in the interest\nof feature parity with the F-91W’s OEM module, 593.\nAlso experiments with caret-free UI: One button cycles hours, the other\nminutes, so there’s no toggling between display and adjust modes and no\ncycling the caret through the UI.\n  º LIGHT advances hour by 1\n  º LIGHT long press advances hour by 6\n  º ALARM advances minute by 10\n  º ALARM long press cycles through signal modes (just one at the moment)"
+        "doc": "Daily ALARM face (formerly WAKE Face)\nBasic daily alarm clock face. Seems useful if nothing else in the interest\nof feature parity with the F-91W’s OEM module, 593.\nAlso experiments with caret-free UI: One button cycles hours, the other\nminutes, so there’s no toggling between display and adjust modes and no\ncycling the caret through the UI.\n  º LIGHT advances hour by 1\n  º LIGHT long press advances hour by 6\n  º ALARM advances minute by 10\n  º ALARM long press cycles through signal modes (just one at the moment)"
       },
       {
         "face": "countdown",
@@ -37,7 +37,7 @@
       },
       {
         "face": "days_since",
-        "doc": "*define\nDAYS SINCE face (previously Day One)\nThis watch face displays the number of days since or until a given date.\nIt was originally designed to display the number of days you’ve been alive,\nbut technically it can count up from any date in the 20th century or the\n21st century, so far.\nLong press on the Alarm button to enter customization mode. The text “YR”\nwill appear, and will allow you to set the year starting from 1959. Press\nAlarm repeatedly to advance the year. If your birthday is before 1959,\nadvance beyond the current year and it will wrap around to 1900.\nOnce you have set the year, press Light to set the month (“MO”) and\nday (“DA”), advancing the value by pressing Alarm repeatedly.\nNote that at this time, the Day One face does not display the sleep\nindicator in sleep mode, which may make the watch appear to be\nunresponsive in sleep mode. You can still press the Alarm button to\nwake the watch. This UI quirk will be addressed in a future update."
+        "doc": "DAYS SINCE face (previously Day One)\nThis watch face displays the number of days since or until a given date.\nIt was originally designed to display the number of days you’ve been alive,\nbut technically it can count up from any date in the 20th century or the\n21st century, so far.\nLong press on the Alarm button to enter customization mode. The text “YR”\nwill appear, and will allow you to set the year starting from 1959. Press\nAlarm repeatedly to advance the year. If your birthday is before 1959,\nadvance beyond the current year and it will wrap around to 1900.\nOnce you have set the year, press Light to set the month (“MO”) and\nday (“DA”), advancing the value by pressing Alarm repeatedly.\nNote that at this time, the Day One face does not display the sleep\nindicator in sleep mode, which may make the watch appear to be\nunresponsive in sleep mode. You can still press the Alarm button to\nwake the watch. This UI quirk will be addressed in a future update."
       },
       {
         "face": "fast_stopwatch",
@@ -62,7 +62,7 @@
     "faces": [
       {
         "face": "all_segments",
-        "doc": "define\nALL SEGMENTS FACE\nThis watch face energizes all segments on the screen at once."
+        "doc": "ALL SEGMENTS FACE\nThis watch face energizes all segments on the screen at once."
       },
       {
         "face": "character_set",
@@ -71,7 +71,7 @@
       { "face": "light_sensor", "doc": "" },
       {
         "face": "peek_memory",
-        "doc": "*define\nPEEK FACE\nThis watch face displays a location in memory in a given format.\nCurrently hard coded but would be cool to let user select it somehow.\nOnly works with custom LCD. This is for debugging purposes only."
+        "doc": "PEEK FACE\nThis watch face displays a location in memory in a given format.\nCurrently hard coded but would be cool to let user select it somehow.\nOnly works with custom LCD. This is for debugging purposes only."
       }
     ]
   },
@@ -90,7 +90,7 @@
     "faces": [
       {
         "face": "accelerometer_status",
-        "doc": "*define\nAccelerometer Interrupt Counter\nThis is an experimental watch face for counting the number of interrupts that\nthe Sensor Watch Motion acceleromoeter board fires. I expect it will be removed\nonce we integrate accelerometer functionality more deeply into Movement."
+        "doc": "Accelerometer Interrupt Counter\nThis is an experimental watch face for counting the number of interrupts that\nthe Sensor Watch Motion acceleromoeter board fires. I expect it will be removed\nonce we integrate accelerometer functionality more deeply into Movement."
       },
       { "face": "activity_logging", "doc": "" },
       { "face": "light_meter", "doc": "" },
